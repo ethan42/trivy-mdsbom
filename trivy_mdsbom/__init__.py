@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import csv
 import json
 import matplotlib.pyplot as plt
 
@@ -49,35 +50,20 @@ def extract_from_csv(path: str) -> Tuple[Set[str], Set[str]]:
     """Process trivy-generated CSV file and return observed and non-observed CVEs"""
     with open(path) as f:
         observed, non_observed = set(), set()
-        data = f.readlines()
-        for line in data:
-            is_observed = line.endswith("true\n")
-            cves = extract_cves(line)
+        data = csv.DictReader(f)
+        for row in data:
+            is_observed = row["observed"] == "true"
+            cves = extract_cves(row["name"])
             if is_observed:
                 observed.update(cves)
             else:
                 non_observed.update(cves)
+
         return observed, non_observed
-
-
-
-
 
 
 def main():
     parser = argparse.ArgumentParser(description="Extract CVEs from SCA files")
-    ## add argument to specify if SARIF or CycloneDX files are being processed
-    # parser.add_argument("--filetype", choices=["sarif", "cyclonedx"], help="Type of file to process", default="sarif")
-    # parser.add_argument("file", help="File to process")
-    # args = parser.parse_args()
-
-    # if args.filetype == "sarif":
-    #     observed, non_observed = extract_from_sarif(args.file)
-    # else:
-    #     observed, non_observed = extract_from_cyclonedx(args.file)
-    # print(f"Observed: {observed}")
-    # print(f"Non-observed: {non_observed}")
-
     parser.add_argument("csv", help="Trivy-generated CSV file")
     parser.add_argument("venn", help="Venn diagram to generate")
     args = parser.parse_args()
