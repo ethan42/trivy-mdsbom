@@ -86,6 +86,11 @@ jobs:
           name: dynamic_sca_trivy.csv
           path: dynamic_sca_trivy.csv
 
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
       - name: Install poetry package when graphs are requested
         if: ${{ github.event.inputs.generate-graphs == 'true' }}
         run: |
