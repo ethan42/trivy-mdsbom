@@ -91,6 +91,7 @@ jobs:
         run: |
           sudo apt-get install python3-pip
           pip3 install poetry
+          pip3 install matplotlib-venn matplotlib
           poetry install
           poetry run python3 graph dynamic_sca_trivy.csv -o venn.png
 
