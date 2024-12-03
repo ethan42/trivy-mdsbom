@@ -18,8 +18,3 @@ main = "trivy_mdsbom:main"
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-[[tool.poetry.source]]
-name = "github"
-url = "https://pip.pkg.github.com/ethan42"
-default = true
-
