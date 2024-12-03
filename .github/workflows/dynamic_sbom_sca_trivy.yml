@@ -1,6 +1,7 @@
 ## Scan a docker image -> get a SARIF/SBOM report
 
 name: Mayhem Dynamic SBOM/SCA + Trivy
+run-name: Mayhem DSBOM + Trivy on ${{ github.event.inputs.docker_image }}
 
 on:
   workflow_dispatch:
